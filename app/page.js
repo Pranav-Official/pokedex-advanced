@@ -31,7 +31,27 @@ export default function Home() {
           </button>
         </div>
         <div className= {`basis-3/4 flex flex-col justify-center lg:w-3/4 xl:w-3/5 2xl:w-1/2 `}>
-          <div className='bg-pokedex bg-no-repeat bg-center bg-contain aspect-video'>
+          <div className='bg-pokedex bg-no-repeat bg-center bg-contain aspect-video flex flex-row items-center justify-ar'>
+            <div className='dpad-container grid grid-cols-2 rotate-45 border-2 '>
+                <button className='dpad-buttons bg-menu-block flex items-center justify-center'>
+                    <Image className='dpad-image' src="/play-solid.svg" width={50} height={50} />
+                </button>
+                <button className='dpad-buttons bg-menu-block'>
+                    test
+                </button>
+                <button className='dpad-buttons bg-menu-block'>
+                    test
+                </button>
+                <button className='dpad-buttons bg-menu-block'>
+                    test
+                </button>
+            </div>
+            <div className='screen-container border-2'>
+              screen
+            </div>
+            <div className='button-container w-1/6 h-3/6 border-2'>
+              buttons
+            </div>
           </div>
         </div>
       </div>

@@ -24,3 +24,31 @@ body {
   background-color: #7AC74F;
 
 }
+
+.dpad-container {
+  margin-left: 4% ;
+  margin-bottom: 2.5%;
+  width: 13%;
+  height: 23%;
+}
+
+.screen-container {
+  margin-left: 12.7% ;
+  margin-bottom: 3%;
+  height: 80%;
+  width: 45%;
+}
+
+.button-container {
+  margin-left: 2% ;
+  margin-bottom: 18%;
+  padding: 10%;
+}
+
+.dpad-buttons {
+  margin: 10%;
+}
+
+.dpad-image {
+  width: 60%;
+}

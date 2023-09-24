@@ -30,8 +30,11 @@ export default function Home() {
         
           </button>
         </div>
-        <div className= {`basis-3/4 aspect-video flex flex-col items-center justify-center lg:w-3/4 xl:w-3/5 2xl:w-1/2 `}>
+        <div className= {`basis-3/4 aspect-video flex flex-col justify-center lg:w-3/4 xl:w-3/5 2xl:w-1/2 `}>
           <Image src="/pokedex.svg" width={1500} height={1500} />
+          <div className='absolute w-1/2 bg-menu-block'>
+            test
+          </div>
         </div>
       </div>
     </main>

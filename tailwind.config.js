@@ -6,13 +6,26 @@ module.exports = {
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
-    extend: {
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic':
-          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
-      },
+    colors: {
+      'BG-green': '#7AC74F',
+      'primary-blue': '#05C8FF',
+      'primary-red': '#EC1313',
+      'secondary-blue': '#71E0FF',
+      'menu-block': '#FFC979',
+      "pkemon-yellow": "#FFCC3C",
+      "pkemon-blue": "#396BB7",
+
+
     },
+    fontFamily: {
+      Just_Me_Again_Down_Here: ["Just Me Again Down Here"],
+      Chakra_Petch: ["Chakra Petch", "sans-serif"],
+     },
+     extend: {
+      backgroundImage:{
+        'pokedex': 'url(/pokedex.svg)',
+      }
+     },
   },
   plugins: [],
 }

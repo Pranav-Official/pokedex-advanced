@@ -15,30 +15,23 @@ export default function Home() {
 
 
   return (
-    <main className={`h-screen w-screen flex ${orientation === 'portrait' ? 'flex-col' : 'flex-row'}`}>
-      <div className='flex flex-col'>
-        <div className= {` ml-16 h-full flex flex-col items-center justify-center ${orientation === 'portrait' ? 'rotate-90 ml-0 mt-8' : ' '} `}>
-          <Image src="/logo.png" width={160} height={140} />
-          <p className='text-2xl font-Just_Me_Again_Down_Here '>Advanced Edition</p>
-          <button className='flex flex-row font-Just_Me_Again_Down_Here mt-6 w-20 border-2 py-2 px-2 rounded-md bg-pkemon-yellow border-pkemon-blue'>
+    <main className={` flex overflow-fit items-center justify-center h-screen `}>
+      <div className={`fixed top-0 right-0 my-auto px-5 w-screen h-screen border-2 flex flex-col z-10 text-center justify-center text-4xl font-Just_Me_Again_Down_Here rounded-xl shadow-xl bg-pkemon-yellow ${orientation === 'portrait' ? '' : 'hidden'}`}>
+        <p>This websites works best in landscape mode. <span className='text-5xl'> please rotate your device!!</span> </p>
+      </div>
+      <div className={`  flex w-full h-full lg:flex-col items-center ${orientation === 'portrait' ? 'hidden' : 'flex-row '}`}>
+        <div className= {`ml-10 -mr-6 basis-1/4 h-full w-full flex flex-col items-center justify-center lg:my-10 lg:ml-0 lg:-mr-0 `}>
+          <Image className='w-44 xl:w-56 2xl:w-72' src="/logo.png" width={300} height={300} />
+          <p className='text-2xl lg:text-3xl 2xl:text-4xl font-Just_Me_Again_Down_Here '>Advanced Edition</p>
+          <p className='text-xl lg:text-2xl 2xl:text-3xl font-Just_Me_Again_Down_Here '>Made by Pranav</p>
+          <button className='items-center flex flex-row font-Just_Me_Again_Down_Here mt-6 w-20 border-2 py-2 px-2 rounded-md bg-pkemon-yellow border-pkemon-blue text-xl lg:absolute lg:right-14 lg:top-14  xl:px-4 lg:text-4xl lg:w-fit'>
             github
-            <Image className='ml-2' src="/github.png" width={20} height={20} />
+            <Image className='ml-2 w-5 h-5 lg:w-auto lg:h-auto' src="/github.png" width={20} height={20} />
         
           </button>
-          <p className='text-md font-Just_Me_Again_Down_Here' >Made by Pranav P Prasanth</p>
         </div>
-      </div>
-      <div className={`flex flex-row ${orientation === 'portrait' ? 'rotate-90 ' : 'items-center'} `}>
-        <div className=' flex flex-row  bg-pokedex bg-no-repeat bg-contain bg-center bg-menu-block'>
-          <div className='border-2  ml-4 mt-32 mb-36 w-28 '>
-            box
-          </div>
-          <div className='border-2 w-72 ml-20 translate-x-1 mt-9 mb-14 '>
-            screen
-          </div>
-          <div className='border-2 ml-12 w-20 mt-14 mb-40 '>
-            box
-          </div>
+        <div className= {`basis-3/4 aspect-video flex flex-col items-center justify-center lg:w-3/4 xl:w-3/5 2xl:w-1/2 `}>
+          <Image src="/pokedex.svg" width={1500} height={1500} />
         </div>
       </div>
     </main>

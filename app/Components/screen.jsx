@@ -17,16 +17,15 @@ const Screen = () => {
                 </div>
 
                 <div className='Pokemon-display-card-box '>
-                    <div className='Pokemon-display-card bg-secondary-blue flex flex-col items-center justify-center '>
-                        <Image className='w-10/12 h-10/12' src="/base-sprites-compressed/24.png" width={300} height={300} />
-                    </div>
-                    <div className='Pokemon-display-card bg-secondary-blue flex flex-col items-center justify-center '>
-                        <Image className='w-10/12 h-10/12' src="/base-sprites-compressed/25.png" width={300} height={300} />
-                    </div>
-                    <div className='Pokemon-display-card bg-secondary-blue flex flex-col items-center justify-center '>
-                        <Image className='w-10/12 h-10/12' src="/base-sprites-compressed/26.png" width={300} height={300} />
-                    </div>
-
+                <Swiper spaceBetween={50}
+                        slidesPerView={3}
+                        onSlideChange={() => console.log('slide change')}
+                        onSwiper={(swiper) => console.log(swiper)}
+                        >
+                            <SwiperSlide>Slide 1</SwiperSlide>
+                            <SwiperSlide>Slide 1</SwiperSlide>
+                    ...
+                </Swiper>
                 </div>
 
             </div>

@@ -37,55 +37,29 @@ const Screen = () => {
 
         let temp = [];
         for(let i = 0; i < 7; i++){
-            if(list[i] !== null){
+            if(list[i]>-1){
                 temp.push(pokemon_ids[list[i]]);
             }
             else{
                 temp.push(null);
             }
         }
+        setTempList(temp);
         
     }
 
     const assignStrings = (list) => {
+        let tempWindow = [];
+        let tempSprite = ['', '', ''];
+        console.log(list)
+
         for (let i = 0; i < 7; i++) {
             if(list[i] !== null){
 
-                let temp = '#' + list[i].id.toString() + ' ' + tempList[i].name.toString().toUpperCase();
+                let temp = '#' + list[i].id.toString() + ' ' + list[i].name.toString().toUpperCase();
 
                 if(i>1&&i<5){
-                    tempSprite[i-2] = '/base-sprites-compressed/' + tempList[i].id.toString()+ '.png'
-                }
-
-                tempWindow.push(temp);
-            }
-            else{
-                tempWindow.push('');
-                if(i>1&&i<5){
-                    tempSprite[i-2] = '/base-sprites-compressed/null.png'
-                }
-            }
-        }
-        
-    }
-
-    // console.log(tempList);
-
-    let tempWindow = [];
-    let tempSprite = ['', '', ''];
-
-
-    useEffect(() => {
-        updateFontSize();
-        window.addEventListener('resize', updateFontSize);
-
-        for (let i = 0; i < 7; i++) {
-            if(tempList[i] !== null){
-
-                let temp = '#' + tempList[i].id.toString() + ' ' + tempList[i].name.toString().toUpperCase();
-
-                if(i>1&&i<5){
-                    tempSprite[i-2] = '/base-sprites-compressed/' + tempList[i].id.toString()+ '.png'
+                    tempSprite[i-2] = '/base-sprites-compressed/' + list[i].id.toString()+ '.png'
                 }
 
                 tempWindow.push(temp);
@@ -99,25 +73,87 @@ const Screen = () => {
         }
         setNameWindow(tempWindow);
         setSpritePack(tempSprite);
+        
+    }
+
+    // console.log(tempList);
+
+    let tempWindow = [];
+    let tempSprite = ['', '', ''];
+
+    const incrementList = () => {
+        if(offset < 1263)  
+        setOffset((prevOffset) => {
+          const newOffset = prevOffset + 1;
+          assignTempList(newOffset); // Update tempList based on the newOffset
+          assignStrings(tempList);   // Update nameWindow based on the updated tempList
+          return newOffset;
+        });
+      }
+
+    
+    const decrementList = () => {
+        if (offset > 0) {
+          setOffset((prevOffset) => {
+            const newOffset = prevOffset - 1;
+            assignTempList(newOffset); // Update tempList based on the newOffset
+            assignStrings(tempList);   // Update nameWindow based on the updated tempList
+            return newOffset;
+          });
+        }
+      }
+
+
+    useEffect(() => {
+        updateFontSize();
+        window.addEventListener('resize', updateFontSize);
+        
+        assignTempList(offset);
+        assignStrings(tempList);
+
+        // for (let i = 0; i < 7; i++) {
+        //     if(tempList[i] !== null){
+
+        //         let temp = '#' + tempList[i].id.toString() + ' ' + tempList[i].name.toString().toUpperCase();
+
+        //         if(i>1&&i<5){
+        //             tempSprite[i-2] = '/base-sprites-compressed/' + tempList[i].id.toString()+ '.png'
+        //         }
+
+        //         tempWindow.push(temp);
+        //     }
+        //     else{
+        //         tempWindow.push('');
+        //         if(i>1&&i<5){
+        //             tempSprite[i-2] = '/base-sprites-compressed/null.png'
+        //         }
+        //     }
+        // }
+        // setNameWindow(tempWindow);
+        // setSpritePack(tempSprite);
 
         return () => {
             window.removeEventListener('resize', updateFontSize);
           };
 
-    }, []);
+    }, [offset]);
 
 
-    const incrementList = () => {
-        let temp = tempList;
-        for(let i = 0; i < 7; i++){
-            if(temp[i] === null){
-                temp[i] = pokemon_ids[i+1];
-                break;
-            }
-        }
-        tempWindow = temp;
-        // console.log(temp);
-    }
+    // const incrementList = () => {
+    //     setOffset(offset+1);
+    //     assignTempList(offset+1);
+    //     assignStrings(tempList);
+    //     console.log(offset)
+    // }
+
+    // const decrementList = () => {
+    //     if(offset>-1){
+    //         setOffset(offset-1);
+    //         assignTempList(offset-1);
+    //         assignStrings(tempList);
+    //     }
+    //     console.log(offset)
+    // }
 
     
 
@@ -152,7 +188,7 @@ const Screen = () => {
             </div>
             <div className="name-card-container flex flex-col  justify-center">
                 <div className='end-card flex flex-row '>
-                        <button className='basis-3/4 bg-menu-block'>
+                        <button className='basis-3/4 bg-menu-block' onClick={decrementList}>
                             <Image className='arrow-up ' src="/icons/arrowup.svg" width={300} height={300} />
                         </button>
                         <button className='basis-1/4 bg-menu-block'>
@@ -186,7 +222,7 @@ const Screen = () => {
                     
                 </div>
                 <div className='end-card flex flex-row '>
-                    <button className='basis-3/4 bg-menu-block'>
+                    <button className='basis-3/4 bg-menu-block' onClick={incrementList}>
                         <Image className='arrow-up rotate-180' src="/icons/arrowup.svg" width={300} height={300} />
                     </button>
                     <button className='basis-1/4 bg-menu-block'>

@@ -7,11 +7,21 @@ import Screen from './Components/screen';
 
 export default function Home() {
 
-  const [orientation, setOrientation] = useState(window.matchMedia("(orientation: portrait)").matches ? 'portrait' : 'landscape');
+  const [orientation, setOrientation] = useState('landscape');
 
-  window.matchMedia("(orientation: portrait)").addEventListener("change", e => {
-    setOrientation(e.matches ? 'portrait' : 'landscape');
-  })
+  // window.matchMedia("(orientation: portrait)").addEventListener("change", e => {
+  //   setOrientation(e.matches ? 'portrait' : 'landscape');
+  // })
+
+  useEffect(() => {
+    window.matchMedia("(orientation: portrait)").matches ? 'portrait' : 'landscape'
+
+    window.matchMedia("(orientation: portrait)").addEventListener("change", e => {
+      setOrientation(e.matches ? 'portrait' : 'landscape');
+    })
+    
+
+  }, [orientation])
 
 
 

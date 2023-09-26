@@ -139,26 +139,6 @@ const Screen = () => {
     }, [offset]);
 
 
-    // const incrementList = () => {
-    //     setOffset(offset+1);
-    //     assignTempList(offset+1);
-    //     assignStrings(tempList);
-    //     console.log(offset)
-    // }
-
-    // const decrementList = () => {
-    //     if(offset>-1){
-    //         setOffset(offset-1);
-    //         assignTempList(offset-1);
-    //         assignStrings(tempList);
-    //     }
-    //     console.log(offset)
-    // }
-
-    
-
-    
-
 
 
     return (
@@ -171,7 +151,7 @@ const Screen = () => {
                     
                 </div>
 
-                <div className='Pokemon-display-card-box justify-center  '>
+                <div className='Pokemon-display-card-box justify-center' id="myAnimation">
                     <div className='Pokemon-display-card bg-secondary-blue flex flex-col items-center justify-center '>
                         <Image className='pokemon-image ' src={spritePack[0]}width={300} height={300} />
                     </div>

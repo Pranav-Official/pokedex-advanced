@@ -3,6 +3,7 @@ import { IMAGES_MANIFEST } from 'next/dist/shared/lib/constants'
 import Image from 'next/image'
 import { useOrientation } from 'react-use'
 import { useEffect, useState } from 'react';
+import Screen from './Components/screen';
 
 export default function Home() {
 
@@ -32,25 +33,36 @@ export default function Home() {
         </div>
         <div className= {`basis-3/4 flex flex-col justify-center lg:w-3/4 xl:w-3/5 2xl:w-1/2 `}>
           <div className='bg-pokedex bg-no-repeat bg-center bg-contain aspect-video flex flex-row items-center justify-ar'>
-            <div className='dpad-container grid grid-cols-2 rotate-45 border-2 '>
-                <button className='dpad-buttons bg-menu-block flex items-center justify-center'>
-                    <Image className='dpad-image' src="/play-solid.svg" width={50} height={50} />
+            <div className='dpad-container grid grid-cols-2 rotate-45 border-0 '>
+                <div className='center-circle absolute bg-primary-blue'>
+
+                </div>
+                <button className='dpad-buttons bg-dpad-grey flex items-center justify-center'>
+                    
                 </button>
-                <button className='dpad-buttons bg-menu-block'>
-                    test
+                <button className='dpad-buttons bg-dpad-grey'>
+
                 </button>
-                <button className='dpad-buttons bg-menu-block'>
-                    test
+                <button className='dpad-buttons bg-dpad-grey'>
+
                 </button>
-                <button className='dpad-buttons bg-menu-block'>
-                    test
+                <button className='dpad-buttons bg-dpad-grey'>
+
                 </button>
             </div>
-            <div className='screen-container border-2'>
-              screen
+            <div className='screen-container border-0 flex'>
+              <Screen/>
             </div>
-            <div className='button-container w-1/6 h-3/6 border-2'>
-              buttons
+            <div className='button-container border-0 rotate-0'>
+              <button className='absolute  side-buttons-1 border-2'>
+                
+              </button>
+              <button className='absolute side-buttons-2 bg-dpad-grey'>
+
+              </button>
+              <button className='absolute side-buttons-3 bg-dpad-grey'>
+
+              </button>
             </div>
           </div>
         </div>

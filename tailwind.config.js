@@ -14,6 +14,7 @@ module.exports = {
       'menu-block': '#FFC979',
       "pkemon-yellow": "#FFCC3C",
       "pkemon-blue": "#396BB7",
+      "dpad-grey": "#3d3d3d",
 
 
     },

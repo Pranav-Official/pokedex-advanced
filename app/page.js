@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { useOrientation } from 'react-use'
 import { useEffect, useState } from 'react';
 import Screen from './Components/screen';
+import { motion } from 'framer-motion';
 
 export default function Home() {
 
@@ -64,15 +65,16 @@ export default function Home() {
               <Screen/>
             </div>
             <div className='button-container border-0 rotate-0'>
-              <button className='absolute  side-buttons-1 border-2'>
-                
-              </button>
-              <button className='absolute side-buttons-2 bg-dpad-grey'>
+              <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className='absolute  side-buttons-1 '>
+                <Image src="/icons/volume-low-solid.svg" width={20} height={20} />
+              </motion.button>
+              <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className='absolute side-buttons-2 '>
+                <Image src="/icons/a-solid.svg" width={50} height={50} />
+              </motion.button>
+              <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className='absolute side-buttons-3 '>
+                <Image src="/icons/b-solid.svg" width={50} height={50} />
 
-              </button>
-              <button className='absolute side-buttons-3 bg-dpad-grey'>
-
-              </button>
+              </motion.button>
             </div>
           </div>
         </div>

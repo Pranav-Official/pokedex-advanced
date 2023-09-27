@@ -24,7 +24,7 @@ module.exports = {
      },
      extend: {
       backgroundImage:{
-        'pokedex': 'url(/pokedex.svg)',
+        'pokedex': 'url(/pokedex-copy.svg)',
       }
      },
   },

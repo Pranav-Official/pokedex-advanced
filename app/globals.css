@@ -68,24 +68,36 @@ body {
   border-radius: 50%;
   width: 30%;
   height: 20%;
-  margin-top: 3%;
+  margin-top: 4%;
   margin-left: 22%;
+  padding: 9.5%;
+  background: linear-gradient(145deg, #83d555, #6eb347);
+  box-shadow:  2px 2px 10px black;
 }
 
 .side-buttons-2 {
   border-radius: 50%;
   width: 30%;
   height: 20%;
-  margin-top: 120%;
-  margin-left: 22%;
+  margin-top: 120.0%;
+  margin-left: 23.5%;
+  padding: 8%;
+  padding-top:  5%;
+  background: linear-gradient(145deg, #83d555, #6eb347);
+  box-shadow:  2px 2px 10px black;
 }
 
 .side-buttons-3 {
   border-radius: 50%;
   width: 30%;
   height: 20%;
-  margin-top: 103%;
-  margin-left: 63%;
+  margin-top: 102.0%;
+  margin-left: 62.5%;
+  padding: 8%;
+  padding-top:  4%;
+  background: linear-gradient(145deg, #83d555, #6eb347);
+  background: linear-gradient(145deg, #83d555, #6eb347);
+  box-shadow:  2px 2px 10px black;
 }
 
 

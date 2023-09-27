@@ -2,6 +2,12 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import axios from 'axios';
 import { useEffect, useState, useRef } from 'react';
 import pokemon_ids from '../../public/data/pokemon-ids.json';
+import { motion } from 'framer-motion';
+
+// import menu_nav from '../../public/soundseffects/menu_nav.mp3';
+// import menu_null from '../../public/soundseffects/menu_null.mp3';
+// import menu_select from '../../public/soundseffects/menu_select.mp3';
+// import test from '../../public/soundseffects/test.wav';
 
 // Import Swiper styles
 import 'swiper/css';
@@ -14,6 +20,9 @@ const Screen = () => {
     const [spritePack, setSpritePack] = useState(['', '', '']);
     const [offset, setOffset] = useState(0);
     const [tempList, setTempList] = useState([null, null, null, pokemon_ids[0], pokemon_ids[1], pokemon_ids[2], pokemon_ids[3]]);
+
+    const [moveNameList, setMoveNameList] = useState(false);
+    const [moveDirection, setMoveDirection] = useState(null);
 
     const [fontSize, setFontSize] = useState('16px');
     const [fontSizeMain, setFontSizeMain] = useState('16px');  // Initial font size
@@ -76,13 +85,33 @@ const Screen = () => {
         
     }
 
+    const playsound = (sound) => {
+        const audio = new Audio(sound);
+        audio.play();
+    }
+
     // console.log(tempList);
 
     let tempWindow = [];
     let tempSprite = ['', '', ''];
 
+
+    const handleMove = () => {
+        setMoveNameList(true);
+
+        setTimeout(() => {
+            setMoveNameList(false);
+        },300)
+
+
+    }
+
     const incrementList = () => {
-        if(offset < 1263)  
+        
+        if(offset < 1263) 
+        // playsound(test); 
+        handleMove();
+        setMoveDirection(true);
         setOffset((prevOffset) => {
           const newOffset = prevOffset + 1;
           assignTempList(newOffset); // Update tempList based on the newOffset
@@ -94,6 +123,9 @@ const Screen = () => {
     
     const decrementList = () => {
         if (offset > 0) {
+            // playsound(test);
+          handleMove();
+          setMoveDirection(false);
           setOffset((prevOffset) => {
             const newOffset = prevOffset - 1;
             assignTempList(newOffset); // Update tempList based on the newOffset
@@ -102,6 +134,9 @@ const Screen = () => {
           });
         }
       }
+
+
+
 
 
     useEffect(() => {
@@ -144,23 +179,23 @@ const Screen = () => {
     return (
         <div className="screen border-0 flex-1 overflow-clip flex flex-row">
             <div className="Pokemon-display-card-container relative overflow-clip border-0 flex flex-col ">
-                <div className="fade-layer flex flex-col ">
+                {/* <div className="fade-layer flex flex-col ">
                     <div className="fade flex h-full ">
                     
                     </div>
                     
-                </div>
+                </div> */}
 
                 <div className='Pokemon-display-card-box justify-center' id="myAnimation">
-                    <div className='Pokemon-display-card bg-secondary-blue flex flex-col items-center justify-center '>
+                    <motion.div animate={{y: moveNameList? moveDirection? [0,-100,-270,0] : [0,+100,+270,0] : [0,0,0]}}transition={{type: 'tween', duration: 0.2}} className='Pokemon-display-card bg-secondary-blue flex flex-col items-center justify-center opacity-40 mx-2 my-2' alt='pokemon image'>
                         <Image className='pokemon-image ' src={spritePack[0]}width={300} height={300} />
-                    </div>
-                    <div className='Pokemon-display-card bg-secondary-blue flex flex-col items-center justify-center '>
+                    </motion.div>
+                    <motion.div animate={{y: moveNameList? moveDirection? [0,-100,-270,0] : [0,+100,+270,0] : [0,0,0]}} transition={{type: 'tween', duration: 0.2}} className='Pokemon-display-card bg-secondary-blue flex flex-col items-center justify-center ' alt='pokemon image'>
                         <Image className='pokemon-image ' src={spritePack[1]} width={300} height={300} />
-                    </div>
-                    <div className='Pokemon-display-card bg-secondary-blue flex flex-col items-center justify-center '>
+                    </motion.div>
+                    <motion.div animate={{y: moveNameList? moveDirection? [0,-100,-270,0] : [0,+100,+270,0] : [0,0,0]}} transition={{type: 'tween', duration: 0.2}} className='Pokemon-display-card bg-secondary-blue flex flex-col items-center justify-center opacity-40 mx-2 my-2' alt='pokemon image'>
                         <Image className='pokemon-image ' src={spritePack[2]} width={300} height={300} />
-                    </div>
+                    </motion.div>
                     
 
                 </div>
@@ -175,7 +210,7 @@ const Screen = () => {
 
                         </button>
                 </div>
-                <div className='name-card-3-set flex flex-col' ref={parentRef} >
+                <motion.div animate={{y: moveNameList? moveDirection? [0,-30,0] : [0,+30,0] : [0,0,0]}} transition={{type: 'tween', duration: 0.2}} className='name-card-3-set flex flex-col' ref={parentRef} >
                     <div className='name-card-sub bg-menu-block font-Chakra_Petch whitespace-nowrap' style={{fontSize: fontSize}}>
                         {nameWindow[0]}
                     </div >
@@ -186,9 +221,9 @@ const Screen = () => {
                         {nameWindow[2]}                        
                     </div>
                     
-                    <div className='name-card-main bg-menu-block font-Chakra_Petch whitespace-nowrap' style={{fontSize: fontSizeMain}}>
+                    <motion.div animate={{border: moveNameList? '0.2rem ' : '',marginLeft: moveNameList? '0' : '',scaleY : moveNameList? '0.90' : ''}} transition={{type: 'tween', duration: 0.2}} className='name-card-main bg-menu-block font-Chakra_Petch whitespace-nowrap' style={{fontSize: fontSizeMain}}>
                         {nameWindow[3]}
-                    </div>
+                    </motion.div>
 
                     <div className='name-card-sub bg-menu-block font-Chakra_Petch whitespace-nowrap' style={{fontSize: fontSize}} >
                         {nameWindow[4]}
@@ -200,7 +235,7 @@ const Screen = () => {
                         {nameWindow[6]}
                     </div>
                     
-                </div>
+                </motion.div>
                 <div className='end-card flex flex-row '>
                     <button className='basis-3/4 bg-menu-block' onClick={incrementList}>
                         <Image className='arrow-up rotate-180' src="/icons/arrowup.svg" width={300} height={300} />

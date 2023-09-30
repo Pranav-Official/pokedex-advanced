@@ -232,3 +232,34 @@ body {
   padding-right: 30%;
   
 }
+
+
+/* search page */
+
+.search-bar-container{
+  margin-right: 6%;
+  margin-left: 6%;
+  gap: 2%;
+
+}
+.search-bar-container div{
+  height: 16%;
+  border-radius: 0.357rem;
+}
+.search-bar-container input{
+  height: 16%;
+  border-radius: 0.357rem;
+}
+
+.search-button {
+  padding: 4%;
+}
+
+.back-button-search{
+  top: 6%;
+  /* left: 2%; */
+  padding: 3%;
+  padding-left: 4.5%;
+  padding-right: 4.5%;
+  border-radius: 0.357rem;
+}

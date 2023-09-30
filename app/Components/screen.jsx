@@ -22,6 +22,7 @@ const Screen = () => {
     const [tempList, setTempList] = useState([null, null, null, pokemon_ids[0], pokemon_ids[1], pokemon_ids[2], pokemon_ids[3]]);
 
     const [moveNameList, setMoveNameList] = useState(false);
+    const [showSearch, setShowSearch] = useState(false);
     const [moveDirection, setMoveDirection] = useState(null);
 
     const [fontSize, setFontSize] = useState('16px');
@@ -95,6 +96,15 @@ const Screen = () => {
     let tempWindow = [];
     let tempSprite = ['', '', ''];
 
+    const showSearchBar = () => {
+        setShowSearch((prevShowSearch) =>{
+            return !prevShowSearch
+        });
+        console.log(showSearch);
+    }
+
+
+
 
     const handleMove = () => {
         setMoveNameList(true);
@@ -146,27 +156,6 @@ const Screen = () => {
         assignTempList(offset);
         assignStrings(tempList);
 
-        // for (let i = 0; i < 7; i++) {
-        //     if(tempList[i] !== null){
-
-        //         let temp = '#' + tempList[i].id.toString() + ' ' + tempList[i].name.toString().toUpperCase();
-
-        //         if(i>1&&i<5){
-        //             tempSprite[i-2] = '/base-sprites-compressed/' + tempList[i].id.toString()+ '.png'
-        //         }
-
-        //         tempWindow.push(temp);
-        //     }
-        //     else{
-        //         tempWindow.push('');
-        //         if(i>1&&i<5){
-        //             tempSprite[i-2] = '/base-sprites-compressed/null.png'
-        //         }
-        //     }
-        // }
-        // setNameWindow(tempWindow);
-        // setSpritePack(tempSprite);
-
         return () => {
             window.removeEventListener('resize', updateFontSize);
           };
@@ -177,14 +166,30 @@ const Screen = () => {
 
 
     return (
-        <div className="screen border-0 flex-1 overflow-clip flex flex-row">
-            <div className="Pokemon-display-card-container relative overflow-clip border-0 flex flex-col ">
-                {/* <div className="fade-layer flex flex-col ">
-                    <div className="fade flex h-full ">
-                    
-                    </div>
-                    
-                </div> */}
+        <>
+            
+        <motion.div className="relative screen border-0 flex-1 overflow-clip flex-row flex ">
+
+            <motion.div className= {`absolute top-0 bottom-0 left-0 right-0 ${showSearch? '' : 'hidden'}`}>
+                <div className='search-bar-container flex-1 h-full flex flex-row items-center z-10 '>
+
+                
+                <button className='back-button-search absolute bg-menu-block' onClick={showSearchBar} >
+                    <Image src='/icons/chevron-left-solid.svg' width={15} height={15} />
+                </button>
+                <input type='text' placeholder='Search.....' className='search-bar basis-4/5 bg-menu-block font-Chakra_Petch text-center' fontSize={fontSize} >
+                </input>
+                <div className='search-button basis-1/5 bg-menu-block'>
+                    <Image src='/icons/magnifying-glass-solid.svg' width={50} height={50} />
+                </div>
+
+                </div>
+            </motion.div>
+
+
+
+            
+            <div className={`Pokemon-display-card-container relative overflow-clip border-0 flex flex-col ${showSearch? 'hidden' : ''} `}>
 
                 <div className='Pokemon-display-card-box justify-center' id="myAnimation">
                     <motion.div animate={{y: moveNameList? moveDirection? [0,-100,-270,0] : [0,+100,+270,0] : [0,0,0]}}transition={{type: 'tween', duration: 0.2}} className='Pokemon-display-card bg-secondary-blue flex flex-col items-center justify-center opacity-40 mx-2 my-2' alt='pokemon image'>
@@ -201,12 +206,12 @@ const Screen = () => {
                 </div>
 
             </div>
-            <div className="name-card-container flex flex-col  justify-center">
+            <div className={`name-card-container flex flex-col  justify-center ${showSearch? 'hidden' : ''}`}>
                 <div className='end-card flex flex-row '>
                         <button className='basis-3/4 bg-menu-block' onClick={decrementList}>
                             <Image className='arrow-up ' src="/icons/arrowup.svg" width={300} height={300} />
                         </button>
-                        <button className='basis-1/4 bg-menu-block'>
+                        <button className='basis-1/4 bg-menu-block' onClick={showSearchBar} >
 
                         </button>
                 </div>
@@ -248,7 +253,9 @@ const Screen = () => {
 
                 
             </div>
-        </div>
+        </motion.div>
+        
+        </>
     )
 }
 

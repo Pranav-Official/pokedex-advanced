@@ -15,7 +15,7 @@ export default function Home() {
   // })
 
   useEffect(() => {
-    window.matchMedia("(orientation: portrait)").matches ? 'portrait' : 'landscape'
+    setOrientation(window.matchMedia("(orientation: portrait)").matches ? 'portrait' : 'landscape')
 
     window.matchMedia("(orientation: portrait)").addEventListener("change", e => {
       setOrientation(e.matches ? 'portrait' : 'landscape');

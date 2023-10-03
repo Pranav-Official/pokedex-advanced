@@ -21,18 +21,17 @@ body {
   padding: 0;
   width: 100%;
   height: 100%;
-  background-color: #7AC74F;
-
+  background-color: #7ac74f;
 }
 
 .dpad-container {
-  margin-left: 3.9% ;
+  margin-left: 3.9%;
   margin-bottom: 2.6%;
   width: 13%;
   height: 23%;
 }
 
-.center-circle{
+.center-circle {
   width: 59%;
   height: 59%;
   border-radius: 50%;
@@ -41,7 +40,7 @@ body {
 }
 
 .screen-container {
-  margin-left: 12.73% ;
+  margin-left: 12.73%;
   margin-bottom: 3%;
   height: 80%;
   max-height: 80%;
@@ -49,7 +48,7 @@ body {
 }
 
 .button-container {
-  margin-left: 2% ;
+  margin-left: 2%;
   margin-bottom: 18%;
   height: 40%;
   width: 15%;
@@ -72,79 +71,82 @@ body {
   margin-left: 22%;
   padding: 9.5%;
   background: linear-gradient(145deg, #83d555, #6eb347);
-  box-shadow:  2px 2px 10px black;
+  box-shadow: 2px 2px 10px black;
 }
 
 .side-buttons-2 {
   border-radius: 50%;
   width: 30%;
   height: 20%;
-  margin-top: 120.0%;
+  margin-top: 120%;
   margin-left: 23.5%;
   padding: 8%;
-  padding-top:  5%;
+  padding-top: 5%;
   background: linear-gradient(145deg, #83d555, #6eb347);
-  box-shadow:  2px 2px 10px black;
+  box-shadow: 2px 2px 10px black;
 }
 
 .side-buttons-3 {
   border-radius: 50%;
   width: 30%;
   height: 20%;
-  margin-top: 102.0%;
+  margin-top: 102%;
   margin-left: 62.5%;
   padding: 8%;
-  padding-top:  4%;
+  padding-top: 4%;
   background: linear-gradient(145deg, #83d555, #6eb347);
   background: linear-gradient(145deg, #83d555, #6eb347);
-  box-shadow:  2px 2px 10px black;
+  box-shadow: 2px 2px 10px black;
 }
 
-
-.screen{
-  margin: 2%;
+.screen {
+  margin: 2.5%;
   border-radius: 3.5%;
-  margin-top: 3.5%;
-  margin-bottom: 3.5%;
+  margin-top: 3.1%;
+  margin-bottom: 3.4%;
 }
 
-.Pokemon-display-card-container{
+.inner-3-pages-container {
+  position: absolute;
+  height: 100%;
+  width: 300%;
+}
+
+.inner-page {
+  height: 100%;
+  width: 100%;
+  /* translate:-200%; */
+}
+
+.Pokemon-display-card-container {
   flex-basis: 50%;
   padding-left: 2%;
   padding-right: 2%;
   gap: 2%;
-
 }
-.Pokemon-display-card-box{
+.Pokemon-display-card-box {
   display: flex;
   flex-direction: column;
   gap: 4%;
   height: 100%;
-  overflow-y: hidden;
+  overflow-y: visible;
   margin-left: 2%;
   margin-right: 1%;
-  
 }
 
-
-.Pokemon-display-card{
+.Pokemon-display-card {
   height: 45%;
   max-height: 45%;
   min-height: 45%;
   border-radius: 5%;
-
 }
 
-.pokemon-image{
+.pokemon-image {
   width: 87%;
   height: 87%;
 }
 
-
-
-
-
-.name-card-container{
+.name-card-container {
   flex-basis: 50%;
   gap: 1.5%;
   margin-right: 4%;
@@ -153,36 +155,34 @@ body {
   max-width: 48%;
 }
 
-
-.name-card{
+.name-card {
   height: 9%;
   border-radius: 0.375rem;
   padding-left: 10%;
   padding-top: 1%;
 }
 
-.end-card{
+.end-card {
   height: 9%;
   border-radius: 0.375rem;
-  gap:3%;
+  gap: 3%;
 }
 
-.end-card button{
+.end-card button {
   border-radius: 0.375rem;
 }
 
-.name-card-3-set{
+.name-card-3-set {
   gap: 2%;
   flex: 1 1 0%;
   margin-bottom: 0%;
   align-items: stretch;
-
 }
 /* .name-card-sub{
 
 } */
 
-.name-card-sub{
+.name-card-sub {
   border-radius: 0.357rem;
   flex: 1;
   font-size: 100%;
@@ -191,12 +191,11 @@ body {
   flex-direction: column;
   justify-content: center;
   overflow: hidden;
-  
 }
 
-.name-card-main{
+.name-card-main {
   margin-left: -5%;
-  border: #FF4C29 solid 0.2rem;
+  border: #ff4c29 solid 0.2rem;
   border-radius: 0.357rem;
   flex-basis: 16%;
   font-size: 120%;
@@ -208,10 +207,10 @@ body {
   padding-right: 5%;
 }
 
-.fade-layer{
+.fade-layer {
   pointer-events: none;
   position: absolute;
-  top:0;
+  top: 0;
   right: 0;
   bottom: 0;
   left: 0;
@@ -222,44 +221,52 @@ body {
   margin-left: 5%;
   margin-right: 5%;
   border-radius: 2% 0 0 2%;
-  background: rgb(113,224,240);
-  background: linear-gradient(0deg, rgba(113,224,240,1) 0%, rgba(0,0,0,0) 25%, rgba(0,0,0,0) 75%, rgba(113,224,240,1) 100%);
+  background: rgb(113, 224, 240);
+  background: linear-gradient(
+    0deg,
+    rgba(113, 224, 240, 1) 0%,
+    rgba(0, 0, 0, 0) 25%,
+    rgba(0, 0, 0, 0) 75%,
+    rgba(113, 224, 240, 1) 100%
+  );
 }
-
 
 .arrow-up {
   padding-left: 30%;
   padding-right: 30%;
-  
 }
-
 
 /* search page */
 
-.search-bar-container{
-  margin-right: 6%;
-  margin-left: 6%;
+.search-bar-container {
+  margin-right: 3%;
+  margin-left: 3%;
   gap: 2%;
-
 }
-.search-bar-container div{
-  height: 16%;
+.search-bar-container div {
   border-radius: 0.357rem;
 }
-.search-bar-container input{
+.search-bar-container input {
   height: 16%;
   border-radius: 0.357rem;
 }
 
 .search-button {
-  padding: 4%;
+  padding: 5%;
+  height: 16%;
+  padding-top: 4%;
 }
 
-.back-button-search{
-  top: 6%;
+.back-button-search {
+  top: 3%;
   /* left: 2%; */
   padding: 3%;
   padding-left: 4.5%;
   padding-right: 4.5%;
   border-radius: 0.357rem;
+}
+
+.searchSuggestions {
+  top: 60%;
+  width: 80%;
 }

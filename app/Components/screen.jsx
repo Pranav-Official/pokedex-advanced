@@ -333,7 +333,10 @@ const Screen = () => {
                     style={{ fontSize: `${generalFontSize * 0.9}px` }}
                   >
                     {pokemonData.stats.map((stat, index) => (
-                      <div className="stat bg-BG-green text-center flex flex-col justify-center">
+                      <div
+                        key={index}
+                        className="stat bg-BG-green text-center flex flex-col justify-center"
+                      >
                         {stat.stat.name.toUpperCase()}: {stat.base_stat}
                       </div>
                     ))}

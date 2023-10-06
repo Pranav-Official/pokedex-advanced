@@ -270,3 +270,85 @@ body {
   top: 60%;
   width: 80%;
 }
+
+/* Info Page CSS */
+
+.Title-Nav {
+  margin-top: 4%;
+  margin-bottom: 2%;
+  margin-left: 4%;
+  margin-right: 4%;
+  gap: 2%;
+  height: 12%;
+}
+
+.Title-Nav div,
+.Title-Nav button {
+  border-radius: 0.357rem;
+}
+
+.info-row {
+  height: 37.3%;
+  margin-right: 4%;
+  margin-left: 4%;
+  gap: 1%;
+}
+
+.info-row div {
+  border-radius: 0.357rem;
+}
+
+.basic-info-card {
+  padding: 2%;
+}
+
+.main-info-row {
+  margin-top: 2%;
+  margin-right: 4%;
+  margin-left: 4%;
+  height: 39%;
+  gap: 5%;
+}
+
+.info-options {
+  gap: 2.5%;
+}
+.info-options button {
+  border-radius: 0.357rem;
+}
+.info-description {
+  border-radius: 0.357rem;
+}
+
+.info-container {
+  height: 100%;
+  width: 300%;
+  border-radius: 0.357rem;
+}
+
+.description,
+.stats {
+  padding: 0.8%;
+}
+
+/* .stats {
+  gap: 3%;
+} */
+
+.stats div {
+  border-radius: 0.357rem;
+  margin: 4%;
+}
+
+.evolution-image {
+  margin-left: 16%;
+  margin-right: 16%;
+  border-radius: 0.357rem;
+}
+
+.s1 {
+  height: 300%;
+}
+/* .evolution-image{
+  height: 100%;
+} */

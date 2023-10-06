@@ -3,6 +3,9 @@ import axios from "axios";
 import { useEffect, useState, useRef } from "react";
 import pokemon_ids from "../../public/data/pokemon-ids.json";
 import pokemon_names from "../../public/data/pokemon-names.json";
+import pokemon_offsets from "../../public/data/pokemon-offsets.json";
+
+import fetchPokemonData from "../functions/fetchpokemon-data";
 import { motion } from "framer-motion";
 
 // import menu_nav from '../../public/soundseffects/menu_nav.mp3';
@@ -31,14 +34,19 @@ const Screen = () => {
 
   const [moveNameList, setMoveNameList] = useState(false);
   const [pageMovement, setPageMovement] = useState("-100%");
+  const [infocardMovement, setInfocardMovement] = useState("0%");
   const [moveDirection, setMoveDirection] = useState(null);
 
   //   const pokemon_names_array = JSON.parse(pokemon_names);
 
   const [searchQuery, setSearchQuery] = useState("");
 
+  const [pokemonData, setPokemonData] = useState([]);
+
   const [fontSize, setFontSize] = useState("16px");
-  const [fontSizeMain, setFontSizeMain] = useState("16px"); // Initial font size
+  const [generalFontSize, setGeneralFontSize] = useState(0);
+  const [fontSizeMain, setFontSizeMain] = useState("16px");
+  const [fontTitle, setFontTitle] = useState("16px"); // Initial font size
   const parentRef = useRef(null);
 
   const updateFontSize = () => {
@@ -46,8 +54,11 @@ const Screen = () => {
       const parentHeight = parentRef.current.clientHeight;
       let calculatedFontSize = `${parentHeight / 17}px`; // You can adjust the divisor as needed
       setFontSize(calculatedFontSize);
+      setGeneralFontSize(parentHeight / 17);
       calculatedFontSize = `${parentHeight / 14}px`;
       setFontSizeMain(calculatedFontSize);
+      calculatedFontSize = `${parentHeight / 12}px`;
+      setFontTitle(calculatedFontSize);
     }
   };
 
@@ -119,12 +130,19 @@ const Screen = () => {
     setPageMovement("-200%");
   };
   const showInfoPage = () => {
+    console.log(offset);
     setPageMovement("0%");
     setSearchQuery("");
+    // console.log(fontTitle);
+    // console.log(fontSizeMain);
   };
   const showHomePage = () => {
     setPageMovement("-100%");
     setSearchQuery("");
+  };
+
+  const handleInfoCardMovement = (props) => {
+    setInfocardMovement(props);
   };
 
   const handleMove = () => {
@@ -168,6 +186,15 @@ const Screen = () => {
 
   const searchPokemon = () => {
     console.log(searchQuery);
+    console.log(pokemon_offsets[searchQuery.toLowerCase()]);
+    const newOffset = pokemon_offsets[searchQuery.toLowerCase()];
+    setOffset(() => {
+      assignTempList(newOffset); // Update tempList based on the newOffset
+      assignStrings(tempList);
+      // Update nameWindow based on the updated tempList
+      return newOffset;
+    });
+    showInfoPage();
   };
 
   useEffect(() => {
@@ -187,11 +214,145 @@ const Screen = () => {
       <motion.div className="relative screen border-0 flex-1 flex-row flex overflow-hidden ">
         <motion.div className="inner-3-pages-container h-full w-full flex flex-row">
           <motion.div
-            className="inner-page flex-row flex relative"
+            className="inner-page flex-col flex relative"
             initial={{ x: "-100%" }}
             animate={{ x: pageMovement }}
             transition={{ type: "tween", duration: 0.2 }}
-          ></motion.div>
+          >
+            <div className="Title-Nav flex flex-row">
+              <button className="previous-button bg-menu-block basis-1/6"></button>
+              <div
+                className="Title-Name font-Chakra_Petch bg-menu-block basis-4/6 text-center flex flex-col justify-center whitespace-nowrap"
+                style={{ fontSize: fontTitle }}
+              >
+                {nameWindow[3]}
+              </div>
+              <button className="next-button bg-menu-block basis-1/6"></button>
+            </div>
+            <div className="info-row flex flex-row ">
+              <div className="basis-2/5"></div>
+              <div
+                className="basic-info-card basis-3/5 bg-menu-block font-Chakra_Petch"
+                style={{ fontSize: `${generalFontSize}px` }}
+              >
+                <p>Types:</p>
+                <p>Eletric, Fire</p>
+                <p>
+                  Height: <span></span> Weight: <span></span>
+                </p>
+                <p>Abilities:</p>
+                <p>Flash Fire</p>
+              </div>
+            </div>
+            <div
+              className="main-info-row flex flex-col  font-Chakra_Petch"
+              style={{ fontSize: `${generalFontSize}px` }}
+            >
+              <div className="info-options basis-1/5 flex flex-row">
+                <motion.button
+                  className="bg-menu-block basis-1/3"
+                  onClick={() => handleInfoCardMovement("0%")}
+                >
+                  Info
+                </motion.button>
+                <motion.button
+                  className="bg-menu-block basis-1/3"
+                  onClick={() => handleInfoCardMovement("-33.33333334%")}
+                >
+                  Moves
+                </motion.button>
+                <motion.button
+                  className="bg-menu-block basis-1/3"
+                  onClick={() => handleInfoCardMovement("-66.6666667%")}
+                >
+                  Evolution
+                </motion.button>
+              </div>
+              <div className="info-description basis-4/5 bg-menu-block overflow-hidden">
+                <motion.div
+                  animate={{ x: infocardMovement }}
+                  transition={{ type: "tween", duration: 0.2 }}
+                  className="info-container flex flex-row"
+                >
+                  <div
+                    className="info-card description basis-1/3"
+                    style={{ fontSize: `${generalFontSize * 0.85}px` }}
+                  >
+                    When several of these Pokémon gather, their electricity can
+                    build and cause lightning storms. This intelligent Pokémon
+                    roasts hard berries with electricity to make them tender
+                    enough to eat.
+                  </div>
+                  <div
+                    className="info-card stats basis-1/3 grid grid-cols-3"
+                    style={{ fontSize: `${generalFontSize * 0.9}px` }}
+                  >
+                    <div className="stat bg-BG-green text-center flex flex-col justify-center">
+                      HP:
+                    </div>
+                    <div className="stat bg-BG-green text-center flex flex-col justify-center">
+                      Attack:
+                    </div>
+                    <div className="stat bg-BG-green text-center flex flex-col justify-center">
+                      Defence:
+                    </div>
+                    <div className="stat bg-BG-green text-center flex flex-col justify-center">
+                      SP-ATK:
+                    </div>
+                    <div className="stat bg-BG-green text-center flex flex-col justify-center">
+                      SP-DEF:
+                    </div>
+                    <div className="stat bg-BG-green text-center flex flex-col justify-center">
+                      SPEED:
+                    </div>
+                  </div>
+                  <div
+                    className="info-card evolutions overflow-scroll basis-1/3 "
+                    style={{ fontSize: `${generalFontSize * 0.8}px` }}
+                  >
+                    <div className="s1 grid grid-cols-3 grid-rows-3">
+                      <div className="evolution text-center flex flex-col justify-center">
+                        <div className="evolution-image basis-4/6 flex flex-col justify-center items-center border-2 bg-secondary-blue">
+                          <Image
+                            className="evolution-image-sprite"
+                            src={spritePack[1]}
+                            width={100}
+                            height={100}
+                            alt="pichu"
+                          />
+                        </div>
+                        <p className="evolution-name basis-1/5">#pichu</p>
+                      </div>
+                      <div className="evolution text-center flex flex-col justify-center">
+                        <div className="evolution-image basis-4/6 flex flex-col justify-center items-center border-2 bg-secondary-blue">
+                          <Image
+                            className="evolution-image-sprite"
+                            src={spritePack[1]}
+                            width={100}
+                            height={100}
+                            alt="pichu"
+                          />
+                        </div>
+                        <p className="evolution-name basis-1/5">#pichu</p>
+                      </div>
+                      <div className="evolution text-center flex flex-col justify-center">
+                        <div className="evolution-image basis-4/6 flex flex-col justify-center items-center border-2 bg-secondary-blue">
+                          <Image
+                            className="evolution-image-sprite"
+                            src={spritePack[1]}
+                            width={100}
+                            height={100}
+                            alt="pichu"
+                          />
+                        </div>
+                        <p className="evolution-name basis-1/5">#pichu</p>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              </div>
+            </div>
+          </motion.div>
           <motion.div
             className="inner-page flex-row flex"
             initial={{ x: "-100%" }}
@@ -227,10 +388,10 @@ const Screen = () => {
                 <motion.div
                   animate={{
                     scale: pageMovement === "0%" ? 0.83 : 1,
-                    x: pageMovement === "0%" ? "-240%" : "0%",
+                    x: pageMovement === "0%" ? "-241%" : "0%",
                     y:
                       pageMovement === "0%"
-                        ? "-33%"
+                        ? "-29.5%"
                         : moveNameList
                         ? moveDirection
                           ? [0, -100, -270, 0]
@@ -403,7 +564,7 @@ const Screen = () => {
                 type="text"
                 placeholder="Search....."
                 className="search-bar basis-4/5 bg-menu-block font-Chakra_Petch text-center"
-                fontSize={fontSize}
+                style={{ fontSize: fontSize }}
                 value={searchQuery}
                 onChange={queryChange}
               ></input>
@@ -420,7 +581,7 @@ const Screen = () => {
               </motion.div>
               <motion.div
                 className="searchSuggestions absolute bg-menu-block font-Chakra_Petch items-center text-center flex flex-col"
-                style={{ fontSize: fontSize * 2 }}
+                style={{ fontSize: fontSize }}
               >
                 {pokemon_names
                   .filter((id) => {
@@ -434,8 +595,9 @@ const Screen = () => {
                   })
                   .map((id) => (
                     <div
+                      key={id}
                       className="searchSuggestion hover:cursor-pointer"
-                      onClick={() => setSearchQuery(id)}
+                      onClick={() => setSearchQuery(id.toUpperCase())}
                     >
                       {id.toUpperCase()}
                     </div>

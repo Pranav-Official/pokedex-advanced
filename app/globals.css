@@ -300,6 +300,7 @@ body {
 
 .basic-info-card {
   padding: 2%;
+  padding-top: 1%;
 }
 
 .main-info-row {
@@ -352,3 +353,11 @@ body {
 /* .evolution-image{
   height: 100%;
 } */
+
+.types-grid {
+  gap: 3%;
+}
+.types {
+  border-radius: 0.157rem;
+  border-width: 0.1rem;
+}

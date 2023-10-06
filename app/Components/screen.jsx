@@ -1,4 +1,3 @@
-import { Swiper, SwiperSlide } from "swiper/react";
 import axios from "axios";
 import { useEffect, useState, useRef } from "react";
 import pokemon_ids from "../../public/data/pokemon-ids.json";

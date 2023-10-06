@@ -16,7 +16,7 @@ const pokemonTypeColors = {
   dragon: "#7038F8", // Dragon type - Dark Blue
   dark: "#705848", // Dark type - Dark Gray
   steel: "#B8B8D0", // Steel type - Silver
-  fairy: "#EE99AC", // Fairy type - Light Pink
+  fairy: "#EE99AC", // Fairy type - Light
 };
 
 export default pokemonTypeColors;

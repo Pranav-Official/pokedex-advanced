@@ -300,7 +300,7 @@ const Screen = () => {
                   className="bg-menu-block basis-1/3"
                   onClick={() => handleInfoCardMovement("-33.33333334%")}
                 >
-                  Moves
+                  Stats
                 </motion.button>
                 <motion.button
                   className="bg-menu-block basis-1/3"
@@ -332,7 +332,12 @@ const Screen = () => {
                     className="info-card stats basis-1/3 grid grid-cols-3"
                     style={{ fontSize: `${generalFontSize * 0.9}px` }}
                   >
-                    <div className="stat bg-BG-green text-center flex flex-col justify-center">
+                    {pokemonData.stats.map((stat, index) => (
+                      <div className="stat bg-BG-green text-center flex flex-col justify-center">
+                        {stat.stat.name.toUpperCase()}: {stat.base_stat}
+                      </div>
+                    ))}
+                    {/* <div className="stat bg-BG-green text-center flex flex-col justify-center">
                       HP:
                     </div>
                     <div className="stat bg-BG-green text-center flex flex-col justify-center">
@@ -349,7 +354,7 @@ const Screen = () => {
                     </div>
                     <div className="stat bg-BG-green text-center flex flex-col justify-center">
                       SPEED:
-                    </div>
+                    </div> */}
                   </div>
                   <div
                     className="info-card evolutions overflow-scroll basis-1/3 "

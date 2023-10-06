@@ -21,6 +21,7 @@ import Image from "next/image";
 const Screen = () => {
   const [nameWindow, setNameWindow] = useState([]);
   const [spritePack, setSpritePack] = useState(["", "", ""]);
+  let tempOffset = 0;
   const [offset, setOffset] = useState(0);
   const [tempList, setTempList] = useState([
     null,
@@ -188,12 +189,10 @@ const Screen = () => {
     console.log(searchQuery);
     console.log(pokemon_offsets[searchQuery.toLowerCase()]);
     const newOffset = pokemon_offsets[searchQuery.toLowerCase()];
-    setOffset(() => {
-      assignTempList(newOffset); // Update tempList based on the newOffset
-      assignStrings(tempList);
-      // Update nameWindow based on the updated tempList
-      return newOffset;
-    });
+    console.log(newOffset);
+    assignTempList(newOffset); // Update tempList based on the newOffset
+    assignStrings(tempList);
+    setOffset(newOffset);
     showInfoPage();
   };
 

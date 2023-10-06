@@ -5,6 +5,9 @@ import pokemon_ids from "../../public/data/pokemon-ids.json";
 import pokemon_names from "../../public/data/pokemon-names.json";
 import pokemon_offsets from "../../public/data/pokemon-offsets.json";
 
+import placeholder from "../../public/data/1.json";
+import pokemonTypeColors from "./colors";
+
 import fetchPokemonData from "../functions/fetchpokemon-data";
 import { motion } from "framer-motion";
 
@@ -42,7 +45,7 @@ const Screen = () => {
 
   const [searchQuery, setSearchQuery] = useState("");
 
-  const [pokemonData, setPokemonData] = useState([]);
+  const [pokemonData, setPokemonData] = useState(placeholder);
 
   const [fontSize, setFontSize] = useState("16px");
   const [generalFontSize, setGeneralFontSize] = useState(0);
@@ -122,6 +125,15 @@ const Screen = () => {
     audio.play();
   };
 
+  const fetchRawData = async () => {
+    const data = await fetchPokemonData(pokemon_ids[offset].name);
+    setPokemonData(data);
+    console.log(data);
+  };
+
+  const testFunc = () => {
+    console.log(pokemonData);
+  };
   // console.log(tempList);
 
   let tempWindow = [];
@@ -131,15 +143,17 @@ const Screen = () => {
     setPageMovement("-200%");
   };
   const showInfoPage = () => {
-    console.log(offset);
+    fetchRawData();
     setPageMovement("0%");
     setSearchQuery("");
+    console.log(offset);
     // console.log(fontTitle);
     // console.log(fontSizeMain);
   };
-  const showHomePage = () => {
+  const showHomePage = async () => {
     setPageMovement("-100%");
     setSearchQuery("");
+    console.log(offset);
   };
 
   const handleInfoCardMovement = (props) => {
@@ -186,14 +200,16 @@ const Screen = () => {
   };
 
   const searchPokemon = () => {
-    console.log(searchQuery);
-    console.log(pokemon_offsets[searchQuery.toLowerCase()]);
-    const newOffset = pokemon_offsets[searchQuery.toLowerCase()];
+    const formattedQuery = searchQuery.toLowerCase();
+    const newOffset = pokemon_offsets[formattedQuery];
     console.log(newOffset);
-    assignTempList(newOffset); // Update tempList based on the newOffset
-    assignStrings(tempList);
-    setOffset(newOffset);
-    showInfoPage();
+    setOffset((prevOffset) => {
+      const tempOffset = newOffset;
+      assignTempList(tempOffset); // Update tempList based on the newOffset
+      assignStrings(tempList); // Update nameWindow based on the updated tempList
+      return tempOffset;
+    });
+    showHomePage();
   };
 
   useEffect(() => {
@@ -219,28 +235,55 @@ const Screen = () => {
             transition={{ type: "tween", duration: 0.2 }}
           >
             <div className="Title-Nav flex flex-row">
-              <button className="previous-button bg-menu-block basis-1/6"></button>
+              <button
+                className="previous-button bg-menu-block basis-1/6"
+                onClick={() => testFunc()}
+              ></button>
               <div
-                className="Title-Name font-Chakra_Petch bg-menu-block basis-4/6 text-center flex flex-col justify-center whitespace-nowrap"
+                className="Title-Name font-Chakra_Petch bg-menu-block basis-4/6 text-center flex flex-col justify-center whitespace-nowrap overflow-hidden"
                 style={{ fontSize: fontTitle }}
               >
                 {nameWindow[3]}
               </div>
-              <button className="next-button bg-menu-block basis-1/6"></button>
+              <button
+                className="next-button bg-menu-block basis-1/6"
+                onClick={showHomePage}
+              ></button>
             </div>
             <div className="info-row flex flex-row ">
               <div className="basis-2/5"></div>
               <div
                 className="basic-info-card basis-3/5 bg-menu-block font-Chakra_Petch"
-                style={{ fontSize: `${generalFontSize}px` }}
+                style={{ fontSize: `${generalFontSize * 0.85}px` }}
               >
                 <p>Types:</p>
-                <p>Eletric, Fire</p>
-                <p>
-                  Height: <span></span> Weight: <span></span>
-                </p>
-                <p>Abilities:</p>
-                <p>Flash Fire</p>
+                <div className="types-grid grid grid-cols-2">
+                  {pokemonData.types.map((type, index) => (
+                    <p
+                      key={index}
+                      className="types text-center p-0"
+                      style={{
+                        backgroundColor:
+                          pokemonTypeColors[pokemonData.types[index].type.name],
+                      }}
+                    >
+                      {pokemonData.types[index].type.name}
+                    </p>
+                  ))}
+                </div>
+                <div>
+                  Height:{" "}
+                  <span className="font-bold">{pokemonData.height / 10}m</span>
+                  <div></div>
+                  Weight:{" "}
+                  <span className="font-bold">{pokemonData.weight / 10}kg</span>
+                </div>
+                <div>
+                  Abilities: {pokemonData.abilities[0].ability.name},{" "}
+                  {pokemonData.abilities[1]
+                    ? pokemonData.abilities[1].ability.name
+                    : ""}
+                </div>
               </div>
             </div>
             <div
@@ -277,10 +320,14 @@ const Screen = () => {
                     className="info-card description basis-1/3"
                     style={{ fontSize: `${generalFontSize * 0.85}px` }}
                   >
-                    When several of these Pokémon gather, their electricity can
-                    build and cause lightning storms. This intelligent Pokémon
-                    roasts hard berries with electricity to make them tender
-                    enough to eat.
+                    {pokemonData.text_entry
+                      ? pokemonData.text_entry[0] + " "
+                      : ""}
+                    {pokemonData.text_entry
+                      ? pokemonData.text_entry[1]
+                        ? pokemonData.text_entry[1]
+                        : ""
+                      : ""}
                   </div>
                   <div
                     className="info-card stats basis-1/3 grid grid-cols-3"
@@ -380,6 +427,7 @@ const Screen = () => {
                   <Image
                     className="pokemon-image "
                     src={spritePack[0]}
+                    alt="pokemon image"
                     width={300}
                     height={300}
                   />
@@ -397,15 +445,15 @@ const Screen = () => {
                           : [0, +100, +270, 0]
                         : [0, 0, 0],
                   }}
-                  whileTap={{ scale: 0.9 }}
                   transition={{ type: "tween", duration: 0.2 }}
                   className="Pokemon-display-card bg-secondary-blue flex flex-col items-center justify-center hover:cursor-pointer "
                   alt="pokemon image"
-                  onClick={showInfoPage}
+                  onClick={pageMovement === "0%" ? null : showInfoPage}
                 >
                   <Image
                     className="pokemon-image "
                     src={spritePack[1]}
+                    alt="pokemon image"
                     width={300}
                     height={300}
                   />
@@ -425,6 +473,7 @@ const Screen = () => {
                   <Image
                     className="pokemon-image "
                     src={spritePack[2]}
+                    alt="pokemon image"
                     width={300}
                     height={300}
                   />
@@ -443,6 +492,7 @@ const Screen = () => {
                   <Image
                     className="arrow-up "
                     src="/icons/arrowup.svg"
+                    alt="up"
                     width={300}
                     height={300}
                   />
@@ -455,6 +505,7 @@ const Screen = () => {
                   <Image
                     className="flex items-center "
                     src="/icons/magnifying-glass-solid.svg"
+                    alt="search"
                     width={15}
                     height={15}
                   />
@@ -534,6 +585,7 @@ const Screen = () => {
                   <Image
                     className="arrow-up rotate-180"
                     src="/icons/arrowup.svg"
+                    alt="down"
                     width={300}
                     height={300}
                   />
@@ -555,6 +607,7 @@ const Screen = () => {
               >
                 <Image
                   src="/icons/chevron-left-solid.svg"
+                  alt="back"
                   width={15}
                   height={15}
                 />
@@ -574,6 +627,7 @@ const Screen = () => {
               >
                 <Image
                   src="/icons/magnifying-glass-solid.svg"
+                  alt="search"
                   width={50}
                   height={50}
                 />

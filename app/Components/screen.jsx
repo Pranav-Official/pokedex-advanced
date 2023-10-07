@@ -50,7 +50,9 @@ const Screen = () => {
   const [generalFontSize, setGeneralFontSize] = useState(0);
   const [fontSizeMain, setFontSizeMain] = useState("16px");
   const [fontTitle, setFontTitle] = useState("16px"); // Initial font size
+  const TitleRef = useRef(null);
   const parentRef = useRef(null);
+  const [TitleWidth, setTitleWidth] = useState(0);
 
   const updateFontSize = () => {
     if (parentRef.current) {
@@ -142,10 +144,22 @@ const Screen = () => {
     setPageMovement("-200%");
   };
   const showInfoPage = () => {
+    if (TitleRef.current) {
+      const width = TitleRef.current.getBoundingClientRect().width;
+      setTitleWidth(width);
+      console.log("width", width);
+      const text = nameWindow[3];
+      console.log(text);
+      if (text.length > 14) {
+        let size = `${(width * 1.4) / text.length}px`;
+        setFontTitle(size);
+      }
+    }
     fetchRawData();
     setPageMovement("0%");
     setSearchQuery("");
     console.log(offset);
+    handleInfoCardMovement("0%");
     // console.log(fontTitle);
     // console.log(fontSizeMain);
   };
@@ -213,7 +227,7 @@ const Screen = () => {
 
   useEffect(() => {
     updateFontSize();
-    window.addEventListener("resize", updateFontSize);
+    window.addEventListener("resize", { updateFontSize });
 
     assignTempList(offset);
     assignStrings(tempList);
@@ -238,12 +252,13 @@ const Screen = () => {
                 className="previous-button bg-menu-block basis-1/6"
                 onClick={() => testFunc()}
               ></button>
-              <div
+              <motion.div
+                ref={TitleRef}
                 className="Title-Name font-Chakra_Petch bg-menu-block basis-4/6 text-center flex flex-col justify-center whitespace-nowrap overflow-hidden"
                 style={{ fontSize: fontTitle }}
               >
                 {nameWindow[3]}
-              </div>
+              </motion.div>
               <button
                 className="next-button bg-menu-block basis-1/6"
                 onClick={showHomePage}
@@ -291,18 +306,34 @@ const Screen = () => {
             >
               <div className="info-options basis-1/5 flex flex-row">
                 <motion.button
+                  animate={{
+                    border:
+                      infocardMovement === "0%" ? "solid 0.1rem #ff4c29" : "0",
+                  }}
                   className="bg-menu-block basis-1/3"
                   onClick={() => handleInfoCardMovement("0%")}
                 >
                   Info
                 </motion.button>
                 <motion.button
+                  animate={{
+                    border:
+                      infocardMovement === "-33.33333334%"
+                        ? "solid 0.1rem #ff4c29"
+                        : "0",
+                  }}
                   className="bg-menu-block basis-1/3"
                   onClick={() => handleInfoCardMovement("-33.33333334%")}
                 >
                   Stats
                 </motion.button>
                 <motion.button
+                  animate={{
+                    border:
+                      infocardMovement === "-66.6666667%"
+                        ? "solid 0.1rem #ff4c29"
+                        : "0",
+                  }}
                   className="bg-menu-block basis-1/3"
                   onClick={() => handleInfoCardMovement("-66.6666667%")}
                 >

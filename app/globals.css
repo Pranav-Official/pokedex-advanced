@@ -287,6 +287,12 @@ body {
   border-radius: 0.357rem;
 }
 
+.Title-Name {
+  white-space: nowrap; /* Prevent text from wrapping */
+  overflow: hidden; /* Hide text that overflows */
+  text-overflow: ellipsis " [..]";
+}
+
 .info-row {
   height: 37.3%;
   margin-right: 4%;

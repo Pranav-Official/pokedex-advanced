@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState, useRef } from "react";
+import { memo, useEffect, useState, useRef } from "react";
 import pokemon_ids from "../../public/data/pokemon-ids.json";
 import pokemon_names from "../../public/data/pokemon-names.json";
 import pokemon_offsets from "../../public/data/pokemon-offsets.json";
@@ -20,7 +20,7 @@ import "swiper/css";
 
 import Image from "next/image";
 
-const Screen = () => {
+const Screen = (props) => {
   const [nameWindow, setNameWindow] = useState([]);
   const [spritePack, setSpritePack] = useState(["", "", ""]);
   let tempOffset = 0;
@@ -126,8 +126,8 @@ const Screen = () => {
     audio.play();
   };
 
-  const fetchRawData = async () => {
-    const data = await fetchPokemonData(pokemon_ids[offset].name);
+  const fetchRawData = async (num) => {
+    const data = await fetchPokemonData(pokemon_ids[num].name);
     setPokemonData(data);
     console.log(data);
   };
@@ -137,13 +137,7 @@ const Screen = () => {
   };
   // console.log(tempList);
 
-  let tempWindow = [];
-  let tempSprite = ["", "", ""];
-
-  const showSearchPage = () => {
-    setPageMovement("-200%");
-  };
-  const showInfoPage = () => {
+  const updateTitlefontSize = () => {
     if (TitleRef.current) {
       const width = TitleRef.current.getBoundingClientRect().width;
       setTitleWidth(width);
@@ -151,11 +145,21 @@ const Screen = () => {
       const text = nameWindow[3];
       console.log(text);
       if (text.length > 14) {
-        let size = `${(width * 1.4) / text.length}px`;
+        let size = `${(width * 1.58) / text.length}px`;
         setFontTitle(size);
       }
     }
-    fetchRawData();
+  };
+
+  let tempWindow = [];
+  let tempSprite = ["", "", ""];
+
+  const showSearchPage = () => {
+    setPageMovement("-200%");
+  };
+  const showInfoPage = () => {
+    updateTitlefontSize();
+    fetchRawData(offset);
     setPageMovement("0%");
     setSearchQuery("");
     console.log(offset);
@@ -190,6 +194,9 @@ const Screen = () => {
       const newOffset = prevOffset + 1;
       assignTempList(newOffset); // Update tempList based on the newOffset
       assignStrings(tempList); // Update nameWindow based on the updated tempList
+      if (pageMovement === "0%") {
+        fetchRawData(newOffset);
+      }
       return newOffset;
     });
   };
@@ -203,6 +210,9 @@ const Screen = () => {
         const newOffset = prevOffset - 1;
         assignTempList(newOffset); // Update tempList based on the newOffset
         assignStrings(tempList); // Update nameWindow based on the updated tempList
+        if (pageMovement === "0%") {
+          fetchRawData(newOffset);
+        }
         return newOffset;
       });
     }
@@ -225,17 +235,53 @@ const Screen = () => {
     showHomePage();
   };
 
-  useEffect(() => {
-    updateFontSize();
-    window.addEventListener("resize", { updateFontSize });
+  const incrementInfo = () => {
+    incrementList();
+    showInfoPage();
+  };
 
+  const handlePhysicalButtons = () => {
+    console.log(props.buttonPress);
+    if (pageMovement === "-100%") {
+      if (props.buttonPress === "up") {
+        decrementList();
+      } else if (props.buttonPress === "down") {
+        incrementList();
+      } else if (props.buttonPress === "select") {
+        showInfoPage();
+      }
+    }
+    if (pageMovement === "0%") {
+      if (props.buttonPress === "left") {
+        decrementList();
+      } else if (props.buttonPress === "right") {
+        incrementList();
+      } else if (props.buttonPress === "back") {
+        showHomePage();
+      }
+    }
+  };
+
+  useEffect(() => {
+    handlePhysicalButtons();
+  }, [props]);
+
+  useEffect(() => {
     assignTempList(offset);
     assignStrings(tempList);
+  }, [offset, props]);
+
+  useEffect(() => {
+    updateFontSize();
+
+    window.addEventListener("resize", updateFontSize);
+
+    // console.log(props.props[0]);
 
     return () => {
       window.removeEventListener("resize", updateFontSize);
     };
-  }, [offset]);
+  });
 
   return (
     <>
@@ -249,20 +295,32 @@ const Screen = () => {
           >
             <div className="Title-Nav flex flex-row">
               <button
-                className="previous-button bg-menu-block basis-1/6"
-                onClick={() => testFunc()}
-              ></button>
+                className="previous-button bg-menu-block basis-1/6 flex flex-row justify-center items-center"
+                onClick={() => decrementList()}
+              >
+                <Image
+                  src="/icons/angle-left-solid.svg"
+                  width={20}
+                  height={20}
+                />
+              </button>
               <motion.div
                 ref={TitleRef}
                 className="Title-Name font-Chakra_Petch bg-menu-block basis-4/6 text-center flex flex-col justify-center whitespace-nowrap overflow-hidden"
                 style={{ fontSize: fontTitle }}
               >
-                {nameWindow[3]}
+                {pageMovement === "0%" ? nameWindow[3] : ""}
               </motion.div>
               <button
-                className="next-button bg-menu-block basis-1/6"
-                onClick={showHomePage}
-              ></button>
+                className="next-button bg-menu-block basis-1/6 flex flex-row justify-center items-center"
+                onClick={() => incrementList()}
+              >
+                <Image
+                  src="/icons/angle-right-solid.svg"
+                  width={20}
+                  height={20}
+                />
+              </button>
             </div>
             <div className="info-row flex flex-row ">
               <div className="basis-2/5"></div>
@@ -371,24 +429,6 @@ const Screen = () => {
                         {stat.stat.name.toUpperCase()}: {stat.base_stat}
                       </div>
                     ))}
-                    {/* <div className="stat bg-BG-green text-center flex flex-col justify-center">
-                      HP:
-                    </div>
-                    <div className="stat bg-BG-green text-center flex flex-col justify-center">
-                      Attack:
-                    </div>
-                    <div className="stat bg-BG-green text-center flex flex-col justify-center">
-                      Defence:
-                    </div>
-                    <div className="stat bg-BG-green text-center flex flex-col justify-center">
-                      SP-ATK:
-                    </div>
-                    <div className="stat bg-BG-green text-center flex flex-col justify-center">
-                      SP-DEF:
-                    </div>
-                    <div className="stat bg-BG-green text-center flex flex-col justify-center">
-                      SPEED:
-                    </div> */}
                   </div>
                   <div
                     className="info-card evolutions overflow-scroll basis-1/3 "
@@ -588,11 +628,13 @@ const Screen = () => {
                   }}
                   transition={{ type: "tween", duration: 0.2 }}
                   whileTap={{ scale: 0.9 }}
-                  className="name-card-main bg-menu-block font-Chakra_Petch whitespace-nowrap hover:cursor-pointer "
+                  className="name-card-main bg-menu-block font-Chakra_Petch truncate ... hover:cursor-pointer "
                   style={{ fontSize: fontSizeMain }}
                   onClick={showInfoPage}
                 >
-                  {nameWindow[3]}
+                  {nameWindow[3] === undefined
+                    ? ""
+                    : nameWindow[3].slice(0, 20)}
                 </motion.div>
 
                 <div
@@ -702,4 +744,4 @@ const Screen = () => {
   );
 };
 
-export default Screen;
+export default memo(Screen);

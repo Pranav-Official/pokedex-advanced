@@ -204,7 +204,7 @@ body {
   flex-direction: column;
   justify-content: center;
   overflow: hidden;
-  padding-right: 5%;
+  /* padding-right: 5%; */
 }
 
 .fade-layer {
@@ -285,6 +285,10 @@ body {
 .Title-Nav div,
 .Title-Nav button {
   border-radius: 0.357rem;
+}
+
+.Title-Nav button {
+  padding: 5%;
 }
 
 .Title-Name {

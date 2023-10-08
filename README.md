@@ -1,4 +1,4 @@
-# Next.js Advanced Pokédex Web App
+# Pokédex Advanced Edition Web App
 
 Welcome to the Next.js Advanced Pokédex Web App, the ultimate destination for Pokémon enthusiasts and fans of the classic games and anime series! This web app is designed to bring you a nostalgic experience while offering an accurate representation of the iconic Pokédex device. Discover, explore, and learn about all your favorite Pokémon from the latest generation and beyond!
 

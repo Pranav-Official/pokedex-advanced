@@ -826,7 +826,7 @@ const Screen = (props) => {
                     if (searchQuery === "") {
                       return null;
                     } else if (
-                      id.toLowerCase().includes(searchQuery.toLowerCase())
+                      id.toLowerCase().startsWith(searchQuery.toLowerCase())
                     ) {
                       return id;
                     }

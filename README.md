@@ -1,36 +1,90 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Next.js Advanced Pokédex Web App
+
+Welcome to the Next.js Advanced Pokédex Web App, the ultimate destination for Pokémon enthusiasts and fans of the classic games and anime series! This web app is designed to bring you a nostalgic experience while offering an accurate representation of the iconic Pokédex device. Discover, explore, and learn about all your favorite Pokémon from the latest generation and beyond!
+
+## Features
+
+### Classic Design
+
+I've carefully recreated the design to tickle the nostalgia of all Pokémon classic gamers and anime fans. The design is an accurate representation of the original Pokédex device, providing an immersive experience.
+
+### Extensive Pokémon Information
+
+Explore detailed information about all Pokémon, including their names, types, abilities, stats, and evolutions. Dive into the world of Pokémon and enhance your knowledge.
+
+### Responsive Design an Unique Challenge
+
+My web app is optimized for a seamless experience on all types of devices. This cas the most challenging part in the whole project, the since the design is of a device with a display, all contents must scale perfectly no matter what the viewport size is. This meant scaling the font sizes, gaps, animations etc. After carefull thought and work this feature is now completly operational. so have see for yourself.
+
+### Bug Reporting and Contribution
+
+I encourage the community to actively participate in improving and maintaining this Pokédex. If you encounter any bugs or have suggestions for enhancements, please feel free to open an issue in my GitHub repository. I value your contributions and would love to collaborate with fellow Pokémon enthusiasts.
+
+## Things used to make this project
+
+- Pokeapi - a public api containing details of 1000s of pokemon.
+- nextjs
+- framer motion - a library for reactjs to make animations easier.
 
 ## Getting Started
 
-First, run the development server:
+To get started with the Next.js Advanced Pokédex Web App, follow these steps:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. **Clone the Repository:**
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+   ```bash
+   git clone https://github.com/Pranav-Official/pokedex-advanced.git
+   ```
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+2. **Install Dependencies:**
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+   ```bash
+   cd nextjs-pokedex
+   npm install
+   ```
 
-## Learn More
+3. **Run the Development Server:**
 
-To learn more about Next.js, take a look at the following resources:
+   ```bash
+   npm run dev
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+4. **Open the App:**
+   Visit `http://localhost:3000` in your browser.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Reporting Bugs and Contributing
 
-## Deploy on Vercel
+I encourage the community to actively participate in improving and maintaining this Pokédex. To report bugs or contribute, follow these steps:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. **Fork the Repository:** Click the "Fork" button in the top right corner of the repository to create your own copy.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+2. **Clone Your Fork:**
+
+   ```bash
+   git clone https://github.com/Pranav-Official/pokedex-advanced.git
+   ```
+
+3. **Create a New Branch:**
+
+   ```bash
+   git checkout -b feature/your-feature-name
+   ```
+
+4. **Make Changes:**
+   Make the necessary changes and improvements.
+
+5. **Commit and Push:**
+
+   ```bash
+   git commit -m "Your commit message"
+   git push origin feature/your-feature-name
+   ```
+
+6. **Create a Pull Request:**
+   Go to the original repository on GitHub, and click the "New Pull Request" button. Describe your changes and submit the pull request.
+
+## Join the Pokémon Adventure!
+
+I invite all Pokémon fans and developers to join my journey to make the Next.js Advanced Pokédex Web App the very best. Let's work together to ensure a top-notch Pokédex experience for all trainers and enthusiasts.
+
+Start your adventure today and embark on a nostalgic journey with the Next.js Advanced Pokédex Web App!

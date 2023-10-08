@@ -21,6 +21,7 @@ import "swiper/css";
 import Image from "next/image";
 
 const Screen = (props) => {
+  const [tutorial, setTutorial] = useState(true);
   const [nameWindow, setNameWindow] = useState([]);
   const [spritePack, setSpritePack] = useState(["", "", ""]);
   let tempOffset = 0;
@@ -94,7 +95,7 @@ const Screen = (props) => {
   const assignStrings = (list) => {
     let tempWindow = [];
     let tempSprite = ["", "", ""];
-    console.log(list);
+    // console.log(list);
 
     for (let i = 0; i < 7; i++) {
       if (list[i] !== null) {
@@ -129,7 +130,8 @@ const Screen = (props) => {
   const fetchRawData = async (num) => {
     const data = await fetchPokemonData(pokemon_ids[num].name);
     setPokemonData(data);
-    console.log(data);
+
+    // console.log(data.evolutions);
   };
 
   const testFunc = () => {
@@ -141,9 +143,9 @@ const Screen = (props) => {
     if (TitleRef.current) {
       const width = TitleRef.current.getBoundingClientRect().width;
       setTitleWidth(width);
-      console.log("width", width);
+      // console.log("width", width);
       const text = nameWindow[3];
-      console.log(text);
+      // console.log(text);
       if (text.length > 14) {
         let size = `${(width * 1.58) / text.length}px`;
         setFontTitle(size);
@@ -162,7 +164,7 @@ const Screen = (props) => {
     fetchRawData(offset);
     setPageMovement("0%");
     setSearchQuery("");
-    console.log(offset);
+    // console.log(offset);
     handleInfoCardMovement("0%");
     // console.log(fontTitle);
     // console.log(fontSizeMain);
@@ -170,7 +172,7 @@ const Screen = (props) => {
   const showHomePage = async () => {
     setPageMovement("-100%");
     setSearchQuery("");
-    console.log(offset);
+    // console.log(offset);
   };
 
   const handleInfoCardMovement = (props) => {
@@ -225,18 +227,28 @@ const Screen = (props) => {
   const searchPokemon = () => {
     const formattedQuery = searchQuery.toLowerCase();
     const newOffset = pokemon_offsets[formattedQuery];
-    console.log(newOffset);
-    setOffset((prevOffset) => {
-      const tempOffset = newOffset;
-      assignTempList(tempOffset); // Update tempList based on the newOffset
-      assignStrings(tempList); // Update nameWindow based on the updated tempList
-      return tempOffset;
-    });
-    showHomePage();
+    if (newOffset !== undefined) {
+      console.log(newOffset);
+      setOffset((prevOffset) => {
+        const tempOffset = newOffset;
+        assignTempList(tempOffset); // Update tempList based on the newOffset
+        assignStrings(tempList); // Update nameWindow based on the updated tempList
+        return tempOffset;
+      });
+      showHomePage();
+    }
   };
 
-  const incrementInfo = () => {
-    incrementList();
+  const evolutionInfo = (tempset) => {
+    setOffset((prevOffset) => {
+      const newOffset = tempset;
+      assignTempList(newOffset); // Update tempList based on the newOffset
+      assignStrings(tempList); // Update nameWindow based on the updated tempList
+      if (pageMovement === "0%") {
+        fetchRawData(newOffset);
+      }
+      return newOffset;
+    });
     showInfoPage();
   };
 
@@ -256,6 +268,13 @@ const Screen = (props) => {
         decrementList();
       } else if (props.buttonPress === "right") {
         incrementList();
+      } else if (props.buttonPress === "back") {
+        showHomePage();
+      }
+    }
+    if (pageMovement === "-200%") {
+      if (props.buttonPress === "select") {
+        searchPokemon();
       } else if (props.buttonPress === "back") {
         showHomePage();
       }
@@ -286,6 +305,61 @@ const Screen = (props) => {
   return (
     <>
       <motion.div className="relative screen border-0 flex-1 flex-row flex overflow-hidden ">
+        <motion.div
+          animate={{ display: tutorial ? "block" : "none" }}
+          className="tutorial absolute bg-pkemon-yellow z-20 flex flex-row font-Chakra_Petch "
+        >
+          <p
+            style={{ fontSize: `${generalFontSize * 1.4}px` }}
+            className="tutorial-title text-center "
+          >
+            TUTORIAL
+          </p>
+          <div className="tutorial-block flex flex-col ">
+            <div className="tutorial-block-1 basis-1/2 flex flex-row">
+              <div className="tutorial-icon-container basis-1/3 items-center flex justify-center">
+                <Image
+                  className="tutorial-icon"
+                  src="/icons/dpad.svg"
+                  width={100}
+                  height={100}
+                />
+              </div>
+              <div className="tutorial-text-container basis-2/3 items-center flex justify-center text-center">
+                <p style={{ fontSize: `${generalFontSize * 0.85}px` }}>
+                  Use the D-pad on the left of the device to navigate, Up, Down,
+                  Left, Right. You can also use the provided buttons on the
+                  screen
+                </p>
+              </div>
+            </div>
+            <div className="tutorial-block-2 basis-1/2 flex flex-row">
+              <div className="tutorial-text-container-1 basis-2/3 items-center flex justify-center text-center">
+                <p style={{ fontSize: `${generalFontSize * 0.85}px` }}>
+                  Use the A button and B button on the left of the device to
+                  select an option, or navigate back respectivily.
+                </p>
+              </div>
+              <div className="tutorial-icon-container basis-1/3 items-center flex justify-center">
+                <Image
+                  className="tutorial-icon"
+                  src="/icons/a-b.svg"
+                  width={100}
+                  height={100}
+                />
+              </div>
+            </div>
+          </div>
+          <div className="tutorial-close  ">
+            <motion.button
+              onClick={() => {
+                setTutorial(false);
+              }}
+            >
+              OKAY!
+            </motion.button>
+          </div>
+        </motion.div>
         <motion.div className="inner-3-pages-container h-full w-full flex flex-row">
           <motion.div
             className="inner-page flex-col flex relative"
@@ -431,46 +505,62 @@ const Screen = (props) => {
                     ))}
                   </div>
                   <div
-                    className="info-card evolutions overflow-scroll basis-1/3 "
+                    className={` info-card evolutions  basis-1/3 ${
+                      pokemonData.evolutions === undefined
+                        ? ""
+                        : pokemonData.evolutions.length < 4
+                        ? "overflow-hidden"
+                        : "overflow-scroll"
+                    }`}
                     style={{ fontSize: `${generalFontSize * 0.8}px` }}
                   >
                     <div className="s1 grid grid-cols-3 grid-rows-3">
-                      <div className="evolution text-center flex flex-col justify-center">
-                        <div className="evolution-image basis-4/6 flex flex-col justify-center items-center border-2 bg-secondary-blue">
-                          <Image
-                            className="evolution-image-sprite"
-                            src={spritePack[1]}
-                            width={100}
-                            height={100}
-                            alt="pichu"
-                          />
-                        </div>
-                        <p className="evolution-name basis-1/5">#pichu</p>
-                      </div>
-                      <div className="evolution text-center flex flex-col justify-center">
-                        <div className="evolution-image basis-4/6 flex flex-col justify-center items-center border-2 bg-secondary-blue">
-                          <Image
-                            className="evolution-image-sprite"
-                            src={spritePack[1]}
-                            width={100}
-                            height={100}
-                            alt="pichu"
-                          />
-                        </div>
-                        <p className="evolution-name basis-1/5">#pichu</p>
-                      </div>
-                      <div className="evolution text-center flex flex-col justify-center">
-                        <div className="evolution-image basis-4/6 flex flex-col justify-center items-center border-2 bg-secondary-blue">
-                          <Image
-                            className="evolution-image-sprite"
-                            src={spritePack[1]}
-                            width={100}
-                            height={100}
-                            alt="pichu"
-                          />
-                        </div>
-                        <p className="evolution-name basis-1/5">#pichu</p>
-                      </div>
+                      {pokemonData.evolutions === undefined
+                        ? ""
+                        : pokemonData.evolutions.map((evolution, index) => (
+                            <div
+                              key={index}
+                              className="evolution text-center flex flex-col justify-center"
+                            >
+                              <motion.div
+                                animate={{
+                                  scale:
+                                    pokemon_offsets[evolution] === offset
+                                      ? 1.1
+                                      : 1,
+                                }}
+                                onClick={() =>
+                                  evolutionInfo(pokemon_offsets[evolution])
+                                }
+                                className="evolution-image basis-4/6 flex flex-col justify-center items-center border-2 bg-secondary-blue hover:cursor-pointer"
+                              >
+                                <Image
+                                  className="evolution-image-sprite"
+                                  src={
+                                    "/base-sprites-compressed/" +
+                                    pokemon_ids[
+                                      pokemon_offsets[evolution]
+                                    ].id.toString() +
+                                    ".png"
+                                  }
+                                  width={100}
+                                  height={100}
+                                  alt={evolution}
+                                />
+                              </motion.div>
+                              <motion.p
+                                animate={{
+                                  y:
+                                    pokemon_offsets[evolution] === offset
+                                      ? "8%"
+                                      : "0",
+                                }}
+                                className="evolution-name basis-1/5"
+                              >
+                                {evolution.toUpperCase()}
+                              </motion.p>
+                            </div>
+                          ))}
                     </div>
                   </div>
                 </motion.div>
@@ -670,7 +760,21 @@ const Screen = (props) => {
                     height={300}
                   />
                 </motion.button>
-                <button className="basis-1/4 bg-menu-block"></button>
+                <motion.button
+                  whileTap={{ scale: 0.9 }}
+                  className="basis-1/4 bg-menu-block flex items-center justify-center"
+                  onClick={() => {
+                    setTutorial(true);
+                  }}
+                >
+                  <Image
+                    className="flex items-center "
+                    src="/icons/circle-info-solid.svg"
+                    alt="search"
+                    width={15}
+                    height={15}
+                  />
+                </motion.button>
               </div>
             </div>
           </motion.div>

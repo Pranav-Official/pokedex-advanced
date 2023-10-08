@@ -11,7 +11,7 @@ export default function Home() {
   const [buttonPress, setButtonPress] = useState(["none", 0]);
 
   const handleButtonPress = (props) => {
-    console.log(props, buttonPress[1]);
+    // console.log(props, buttonPress[1]);
     setButtonPress([props, buttonPress[1] + 1]);
   };
 
@@ -63,7 +63,12 @@ export default function Home() {
           <p className="text-xl lg:text-2xl 2xl:text-3xl font-Just_Me_Again_Down_Here ">
             Made by Pranav
           </p>
-          <button className="items-center flex flex-row font-Just_Me_Again_Down_Here mt-6 w-20 border-2 py-2 px-2 rounded-md bg-pkemon-yellow border-pkemon-blue text-xl lg:absolute lg:right-14 lg:top-14  xl:px-4 lg:text-4xl lg:w-fit">
+          <button
+            onClick={() =>
+              window.open("https://github.com/Pranav-Official/pokedex-advanced")
+            }
+            className="items-center flex flex-row font-Just_Me_Again_Down_Here mt-6 w-20 border-2 py-2 px-2 rounded-md bg-pkemon-yellow border-pkemon-blue text-xl lg:absolute lg:right-14 lg:top-14  xl:px-4 lg:text-4xl lg:w-fit"
+          >
             github
             <Image
               className="ml-2 w-5 h-5 lg:w-auto lg:h-auto"

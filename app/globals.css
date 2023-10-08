@@ -106,6 +106,50 @@ body {
   margin-bottom: 3.4%;
 }
 
+/* tutorial */
+
+.tutorial {
+  top: 3%;
+  bottom: 3%;
+  left: 3%;
+  right: 3%;
+  border-radius: 0.35rem;
+  border: black 0.1rem solid;
+}
+
+.tutorial-title {
+  height: 15%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tutorial-block {
+  height: 70%;
+  margin-left: 6%;
+  margin-right: 6%;
+}
+.tutorial-text-container {
+  padding-left: 5%;
+}
+.tutorial-text-container-1 {
+  padding-right: 5%;
+}
+
+.tutorial-close {
+  height: 15%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tutorial-close button {
+  border-radius: 0.2rem;
+  border: black 0.1rem solid;
+  padding-left: 2%;
+  padding-right: 2%;
+}
+
 .inner-3-pages-container {
   position: absolute;
   height: 100%;

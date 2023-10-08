@@ -201,6 +201,7 @@ const Screen = (props) => {
       }
       return newOffset;
     });
+    console.log(pokemon_ids[pokemon_offsets["zygarde-50"]].id.toString());
   };
 
   const decrementList = () => {

@@ -39,7 +39,7 @@ const fetchPokemonData = async (pokemon_name) => {
     }
   };
   getEvolution(evolution);
-  // console.log(evolution_list);
+  console.log(evolution_list);
 
   newdata["evolutions"] = evolution_list;
 

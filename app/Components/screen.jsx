@@ -82,7 +82,7 @@ const Screen = (props) => {
 
     let temp = [];
     for (let i = 0; i < 7; i++) {
-      if (list[i] > -1) {
+      if (list[i] > -1 && list[i] < 1291) {
         temp.push(pokemon_ids[list[i]]);
       } else {
         temp.push(null);
@@ -134,7 +134,7 @@ const Screen = (props) => {
   };
 
   const testFunc = () => {
-    console.log(pokemonData);
+    // console.log(pokemonData);
   };
   // console.log(tempList);
 
@@ -142,13 +142,13 @@ const Screen = (props) => {
     if (TitleRef.current) {
       const width = TitleRef.current.getBoundingClientRect().width;
       setTitleWidth(width);
-      console.log("width", width);
+      // console.log("width", width);
       const text = nameWindow[3];
       // console.log(text);
       if (text.length > 14) {
         let size = Math.floor((width * 1.58) / text.length);
         setFontTitle(size);
-        console.log(size);
+        // console.log(size);
       } else {
         setFontTitle(generalFontSize * 1.4);
       }
@@ -190,21 +190,22 @@ const Screen = (props) => {
   };
 
   const incrementList = () => {
-    if (offset < 1263)
+    if (offset < 1290) {
       // playsound(test);
       handleMove();
-    setMoveDirection(true);
-    setOffset((prevOffset) => {
-      const newOffset = prevOffset + 1;
-      assignTempList(newOffset); // Update tempList based on the newOffset
-      assignStrings(tempList); // Update nameWindow based on the updated tempList
-      if (pageMovement === "0%") {
-        updateTitlefontSize();
-        fetchRawData(newOffset);
-      }
-      return newOffset;
-    });
-    console.log(pokemon_ids[pokemon_offsets["zygarde-50"]].id.toString());
+      setMoveDirection(true);
+      setOffset((prevOffset) => {
+        const newOffset = prevOffset + 1;
+        assignTempList(newOffset); // Update tempList based on the newOffset
+        assignStrings(tempList); // Update nameWindow based on the updated tempList
+        if (pageMovement === "0%") {
+          updateTitlefontSize();
+          fetchRawData(newOffset);
+        }
+        return newOffset;
+      });
+    }
+    // console.log(pokemon_ids[pokemon_offsets["zygarde-50"]].id.toString());
   };
 
   const decrementList = () => {
@@ -233,7 +234,7 @@ const Screen = (props) => {
     const formattedQuery = searchQuery.toLowerCase();
     const newOffset = pokemon_offsets[formattedQuery];
     if (newOffset !== undefined) {
-      console.log(newOffset);
+      // console.log(newOffset);
       setOffset((prevOffset) => {
         const tempOffset = newOffset;
         assignTempList(tempOffset); // Update tempList based on the newOffset
@@ -258,7 +259,7 @@ const Screen = (props) => {
   };
 
   const handlePhysicalButtons = () => {
-    console.log(props.buttonPress);
+    // console.log(props.buttonPress);
     if (pageMovement === "-100%") {
       if (props.buttonPress === "up") {
         decrementList();

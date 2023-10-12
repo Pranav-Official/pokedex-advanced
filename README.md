@@ -16,7 +16,7 @@ Explore detailed information about all Pokémon, including their names, types, a
 
 ### Responsive Design an Unique Challenge
 
-My web app is optimized for a seamless experience on all types of devices. This cas the most challenging part in the whole project, the since the design is of a device with a display, all contents must scale perfectly no matter what the viewport size is. This meant scaling the font sizes, gaps, animations etc. After carefull thought and work this feature is now completly operational. so have see for yourself.
+My web app is optimized for a seamless experience on all types of devices. This has the most challenging part in the whole project, the since the design is mimicking an actual device with a display, all contents must scale perfectly no matter what the viewport size is. This meant scaling the font sizes, gaps, animations etc. After carefull thought and work this feature is now completly operational. so have see for yourself.
 
 ### Bug Reporting and Contribution
 

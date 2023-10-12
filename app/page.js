@@ -108,7 +108,7 @@ export default function Home() {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="absolute  side-buttons-1 "
+                className="absolute  side-buttons-1 hidden "
               >
                 <Image
                   src="/icons/volume-low-solid.svg"

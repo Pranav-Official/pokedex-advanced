@@ -49,7 +49,7 @@ const Screen = (props) => {
 
   const [fontSize, setFontSize] = useState("16px");
   const [generalFontSize, setGeneralFontSize] = useState(0);
-  const [fontSizeMain, setFontSizeMain] = useState("16px");
+  const [fontSizeMain, setFontSizeMain] = useState(16);
   const [fontTitle, setFontTitle] = useState("16px"); // Initial font size
   const TitleRef = useRef(null);
   const parentRef = useRef(null);
@@ -64,7 +64,6 @@ const Screen = (props) => {
       calculatedFontSize = `${parentHeight / 14}px`;
       setFontSizeMain(calculatedFontSize);
       calculatedFontSize = `${parentHeight / 12}px`;
-      setFontTitle(calculatedFontSize);
     }
   };
 
@@ -143,12 +142,15 @@ const Screen = (props) => {
     if (TitleRef.current) {
       const width = TitleRef.current.getBoundingClientRect().width;
       setTitleWidth(width);
-      // console.log("width", width);
+      console.log("width", width);
       const text = nameWindow[3];
       // console.log(text);
       if (text.length > 14) {
-        let size = `${(width * 1.58) / text.length}px`;
+        let size = Math.floor((width * 1.58) / text.length);
         setFontTitle(size);
+        console.log(size);
+      } else {
+        setFontTitle(generalFontSize * 1.4);
       }
     }
   };
@@ -197,6 +199,7 @@ const Screen = (props) => {
       assignTempList(newOffset); // Update tempList based on the newOffset
       assignStrings(tempList); // Update nameWindow based on the updated tempList
       if (pageMovement === "0%") {
+        updateTitlefontSize();
         fetchRawData(newOffset);
       }
       return newOffset;
@@ -214,6 +217,7 @@ const Screen = (props) => {
         assignTempList(newOffset); // Update tempList based on the newOffset
         assignStrings(tempList); // Update nameWindow based on the updated tempList
         if (pageMovement === "0%") {
+          updateTitlefontSize();
           fetchRawData(newOffset);
         }
         return newOffset;
@@ -351,7 +355,10 @@ const Screen = (props) => {
               </div>
             </div>
           </div>
-          <div className="tutorial-close  ">
+          <div
+            className="tutorial-close  "
+            style={{ fontSize: `${generalFontSize * 1.4}px` }}
+          >
             <motion.button
               onClick={() => {
                 setTutorial(false);
@@ -382,7 +389,7 @@ const Screen = (props) => {
               <motion.div
                 ref={TitleRef}
                 className="Title-Name font-Chakra_Petch bg-menu-block basis-4/6 text-center flex flex-col justify-center whitespace-nowrap overflow-hidden"
-                style={{ fontSize: fontTitle }}
+                style={{ fontSize: `${fontTitle}px` }}
               >
                 {pageMovement === "0%" ? nameWindow[3] : ""}
               </motion.div>
@@ -537,13 +544,14 @@ const Screen = (props) => {
                               >
                                 <Image
                                   className="evolution-image-sprite"
-                                  src={
-                                    "/base-sprites-compressed/" +
+                                  src={`/base-sprites-compressed/${
                                     pokemon_ids[
                                       pokemon_offsets[evolution]
-                                    ].id.toString() +
-                                    ".png"
-                                  }
+                                    ].id.toString() === undefined
+                                      ? "null"
+                                      : pokemon_ids[pokemon_offsets[evolution]]
+                                          .id
+                                  }.png`}
                                   width={100}
                                   height={100}
                                   alt={evolution}
